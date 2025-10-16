@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edge
+  namespace: eta
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: edge } }
+  template:
+    metadata: { labels: { app: edge } }
+    spec:
+      containers:
+        - name: edge
+          image: <ACR_SERVER>/eta-edge:latest
+          env:
+            - name: RCA_API
+              value: http://api.eta.svc.cluster.local:8000
+            - name: DEVICE_ID
+              value: rack-7-node-3

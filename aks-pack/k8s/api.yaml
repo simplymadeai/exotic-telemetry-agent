@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: eta
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: api } }
+  template:
+    metadata:
+      labels: { app: api }
+    spec:
+      containers:
+        - name: api
+          image: <ACR_SERVER>/eta-api:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: RCA_DB
+              value: /data/rca.duckdb
+          volumeMounts:
+            - name: duckdb
+              mountPath: /data
+          readinessProbe:
+            httpGet: { path: /health, port: 8000 }
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: { path: /health, port: 8000 }
+            initialDelaySeconds: 10
+            periodSeconds: 10
+      volumes:
+        - name: duckdb
+          persistentVolumeClaim:
+            claimName: api-duckdb-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  namespace: eta
+spec:
+  selector: { app: api }
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000

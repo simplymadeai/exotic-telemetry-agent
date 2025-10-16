@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simulator
+  namespace: eta
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: simulator } }
+  template:
+    metadata: { labels: { app: simulator } }
+    spec:
+      containers:
+        - name: simulator
+          image: <ACR_SERVER>/eta-sim:latest
+          env:
+            - name: RCA_API
+              value: http://api.eta.svc.cluster.local:8000

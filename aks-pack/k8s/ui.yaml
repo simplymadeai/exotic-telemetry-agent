@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui
+  namespace: eta
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: ui } }
+  template:
+    metadata:
+      labels: { app: ui }
+    spec:
+      containers:
+        - name: ui
+          image: <ACR_SERVER>/eta-ui:latest
+          ports:
+            - containerPort: 8501
+          env:
+            - name: API
+              value: http://api.eta.svc.cluster.local:8000
+          readinessProbe:
+            httpGet: { path: /_stcore/health, port: 8501 }
+            initialDelaySeconds: 10
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui
+  namespace: eta
+spec:
+  selector: { app: ui }
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8501
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui-lb
+  namespace: eta
+spec:
+  selector: { app: ui }
+  ports:
+    - port: 80
+      targetPort: 8501
+  type: LoadBalancer
