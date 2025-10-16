@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite
+*.db
+
+# Virtual env
+.venv/
+env/
+venv/
+
+# IDE files
+.vscode/
+.idea/
+.DS_Store
+
+# Logs
+*.log
+
+# Streamlit cache
+.ui_cache/
+.streamlit/
+
+# DuckDB data
+*.duckdb
