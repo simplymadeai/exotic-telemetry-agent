@@ -1,0 +1,18 @@
+nodes:
+  - inlet_temp_c
+  - fan_rpm
+  - temp_c
+  - vcore_v
+  - cpu_pct
+  - mem_pct
+  - disk_errors
+  - nic_drops
+  - latency_ms
+edges:
+  - [inlet_temp_c, temp_c]
+  - [fan_rpm, temp_c]
+  - [temp_c, cpu_pct]
+  - [vcore_v, cpu_pct]
+  - [cpu_pct, latency_ms]
+  - [disk_errors, latency_ms]
+  - [nic_drops, latency_ms]
