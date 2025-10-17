@@ -2,8 +2,9 @@
 import streamlit as st
 import requests, datetime, time
 import pandas as pd
+import os
 
-API = "http://localhost:8000"
+API = os.getenv("API", "http://api.eta.svc.cluster.local:8000")
 
 st.set_page_config(page_title="Exotic Telemetry Agent", layout="wide")
 st.title("Exotic Telemetry Agent — Hardware↔Software Telemetry")
