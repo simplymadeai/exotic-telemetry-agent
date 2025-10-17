@@ -42,7 +42,7 @@ def detect_latest(device, minutes):
 # ---------- Health ----------
 health = call_json("GET", f"{API}/health")
 if not health or health.get("status") != "ok":
-    st.warning("API not reachable at http://localhost:8000. Start it with `python api/app.py`.")
+    st.warning(f"API not reachable at {API}. Start it with `python api/app.py`.")
     st.stop()
 
 # ---------- Sidebar ----------
