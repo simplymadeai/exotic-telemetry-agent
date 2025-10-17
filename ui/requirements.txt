@@ -1,5 +1,8 @@
-streamlit
-requests
-pandas
-plotly
-python-dateutil
+streamlit>=1.35
+requests>=2.31
+pandas>=2.2
+numpy>=1.26
+duckdb>=1.0.0
+scikit-learn>=1.4
+matplotlib>=3.8
+python-dateutil>=2.9
